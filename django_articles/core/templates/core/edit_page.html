@@ -1,0 +1,118 @@
+{% extends 'core/index.html' %}
+
+{% block content %}
+<h1 class="mt-4">Редактирование статей</h1>
+
+{% if messages %}
+    <div class="alert alert-success">
+        {% for m in messages %}
+            {{m}}
+        {% endfor %}
+    </div>
+{% endif %}
+
+<!-- проверка, если update - то редактирование статьи -->
+{% if update %}
+    <p class="mt-4" >Страница редактирования</p>
+    <p><a href="{% url 'edit_page' %}">Вернуться к статьям для редактирования</a></p>
+
+    <form id="update_data" method="post">
+                {% csrf_token %}
+                {{form}}
+            </form>
+    <button form="update_data" type="submit" class="btn btn-primary mt-2">Обновить</button>
+
+<!-- если не update, то отобразит таблицу статей -->
+{% else %}
+<!-- кнопка - создать статью - Button trigger modal -->
+    <button type="button" class="btn btn-primary mt-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Добавить новую статью
+    </button>
+<!-- таблица статей -->
+    <table class="table table-bordered mt-4">
+      <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">Дата создания - Автор</th>
+            <th scope="col">Название</th>
+            <th scope="col">Текст</th>
+            <th scope="col">Редактирование</th>
+            <th scope="col">Удаление</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for i in list_articles %}
+          <!-- добавлена подсветка исправленной строки
+          нужно сравнить, приведя к одному формату
+          i.id == request.GET.id|add:'0' или
+          i.id|slugify == request.GET.id
+          -->
+      <tr {% if i.id|slugify == request.GET.id %} class="table-success" {% endif %}>
+            <th>{{i.id}} </th>
+            <!-- форматы вывода даты, указание автора
+            i.create_date = формат 11 февраля 2023 г. 16:00
+            i.create_date|date:'d.m.Y' = формат 11.02.2023
+            -->
+            <td>{{i.create_date|date:'d.m.Y'}} - {{i.author}}</td>
+            <td>{{i.name | truncatechars:"15"}}</td>
+            <td>{{i.text | truncatechars:"15"}}</td>
+            <!-- ссылка Редактировать статью -->
+            <td>
+                {% if request.user == i.author or request.user|slugify == 'admin' %}
+                    <a href="{% url 'update_page' i.id %}">Редактировать</a>
+                {% else %}
+                    нет доступа
+                {% endif %}
+            </td>
+            <!-- ссылка Удалить статью -->
+            <td>
+                {% if request.user == i.author or request.user|slugify == 'admin' %}
+                    <form id="delete_form_{{ i.id}}" action="{% url 'delete_page' i.id %}" method="post">
+                    {% csrf_token %}
+                    </form>
+                        <a href="javascript:void()" onclick="delete_question_{{i.id}}()" >Удалить</a>
+                    <script>
+                        function delete_question_{{i.id}}() {
+                            if (confirm("Вы действительно хотите удалить статью?")) {
+                                document.getElementById('delete_form_{{i.id}}').submit()
+                            }
+                        }
+                    </script>
+                {% else %}
+                    нет доступа
+                {% endif %}
+            </td>
+        </tr>
+      {% endfor %}
+
+      </tbody>
+    </table>
+{% endif %}
+
+<!-- Форма добавления новой статьи. Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Добавить статью</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+      </div>
+      <div class="modal-body">
+        <form id="add_form" method="post">
+            {% csrf_token %}
+            {{form}}
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+        <button form="add_form" type="submit" class="btn btn-primary">Добавить</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}

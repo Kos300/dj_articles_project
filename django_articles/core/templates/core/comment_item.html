@@ -1,0 +1,17 @@
+{% if status_comment %}
+   <div class="alert alert-success">
+        {{status_comment}}
+   </div>
+{% endif %}
+
+        Дата создания: {{comment.create_date}}<br>
+        Автор комментария: {{comment.author}}<br>
+        Статус комментария: {{comment.status}}
+
+{% if comment.article.author == request.user or request.user|slugify == 'admin' %}
+        -
+        <a class="update_status" data-url="{% url 'update_comment_status' comment.id 'public' %}" href="#">Изменить статус публикации</a> /
+        <a class="update_status" data-url="{% url 'update_comment_status' comment.id 'delete' %}" href="#">Удалить</a>
+{% endif %}
+        <br><br>
+        {{comment.text}}<br><br>
