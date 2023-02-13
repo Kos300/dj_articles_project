@@ -38,25 +38,25 @@
 Скриншоты основных страниц приложения.
 
 Главная страница
-![](screenshots/2023-02-13_20-38-35.png)
+![](django_articles/screenshots/2023-02-13_20-38-35.png)
 <br><br>Страница авторизации 
-![](screenshots/2023-02-13_20-39-37.png)
+![](django_articles/screenshots/2023-02-13_20-39-37.png)
 <br><br>Страница регистрации
-![](screenshots/2023-02-13_20-39-51.png)
+![](django_articles/screenshots/2023-02-13_20-39-51.png)
 <br><br>Страница редактирования, удаления статей
-![](screenshots/2023-02-13_20-40-40.png)
+![](django_articles/screenshots/2023-02-13_20-40-40.png)
 <br><br>Страница редактирования статьи
-![](screenshots/2023-02-13_20-41-13.png)
+![](django_articles/screenshots/2023-02-13_20-41-13.png)
 <br><br>Уведомление об успешном обновлении статьи
-![](screenshots/2023-02-13_20-41-53.png)
+![](django_articles/screenshots/2023-02-13_20-41-53.png)
 <br><br>Уведомление об удалении комментариев
-![](screenshots/2023-02-13_20-43-02.png)
+![](django_articles/screenshots/2023-02-13_20-43-02.png)
 <br><br>Уведомление об изменении статуса комментария
-![](screenshots/2023-02-13_20-43-45.png)
+![](django_articles/screenshots/2023-02-13_20-43-45.png)
 <br><br>Форма добавления новой статьи
-![](screenshots/2023-02-13_20-44-35.png)
+![](django_articles/screenshots/2023-02-13_20-44-35.png)
 <br><br>Админ панель django, редактирование статьи
-![](screenshots/2023-02-13_20-59-05.png)
+![](django_articles/screenshots/2023-02-13_20-59-05.png)
 
 
 
